@@ -34,7 +34,7 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 
 ## Hypothesis
-- The rating will be higher if the application need be paid.
+- The rating will be higher if the application need be paid. 
 
 
   *find the rating score and price correlationship*
@@ -66,3 +66,8 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 - ???People are more willing to pay for the app under specific categories such as game
 catrgory-->download times-->percentage??
 ## Tips
+i. Doctests or other unit tests. 1-person team minimum 30% actual test coverage; 2- person minimum 70% actual test coverage;3-person minimum ***80% actual coverage AND use Travis CI during development***.
+ii. All functions (methods included) need complete Docstrings. 1-person=minimum 4 functions; 2-person=7+ functions; ***3-person= 10+ functions***
+iii. 3-person teams also should incorporate one of these efficiency techniques that will be discussed in class (***Numba or Cython compilation or parallel processing***).
+
+
