@@ -43,9 +43,11 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 *find the apps higher than 0.99, categorize them*
 
+
 - The proportion of free  apps in each categroy is higher than paid apps.
 
 * categorize first, then visualize the free vs paid propotion*
+
 
 - There is biased price in Applestore which leads to lower rating score.
 
