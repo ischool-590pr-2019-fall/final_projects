@@ -7,18 +7,19 @@ Figure out the specific application categories that can generate more revenue fo
  
 
 ## Hypothesis
-The rating will be higher if the application need be paid.
+- The rating will be higher if the application need be paid.
 
-People are not satisfied with the app will be more likely to publish the reviews
+- People are not satisfied with the app will be more likely to publish the reviews
 
-People are more willing to pay for the app under specific categories such as game
+- People are more willing to pay for the app under specific categories such as game
 
-For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
+- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
 
  
 
 ## Data Source
 https://www.kaggle.com/lava18/google-play-store-apps
+
 https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 
@@ -30,11 +31,15 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 
 ## Hypothesis
-The rating will be higher if the application need be paid.
+- The rating will be higher if the application need be paid.
 data: Applestore.csv vs googleplaystore.csv
 
-People are not satisfied with the app will be more likely to publish the reviews
+googleplay:ReviewsNumber of user reviews for the app (as when scraped)
+Applestore: Rating of all versions vs current version
 
-People are more willing to pay for the app under specific categories such as game
+- People are not satisfied with the app will be more likely to publish the reviews
 
-For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
+
+- People are more willing to pay for the app under specific categories such as game
+
+- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
