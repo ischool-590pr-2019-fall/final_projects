@@ -35,16 +35,20 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 ## Hypothesis
 - The rating will be higher if the application need be paid.
+
 *find the rating score and price correlationship*
 
 
 - For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education
+
 *find the apps higher than 0.99, categorize them*
 
 - The proportion of free  apps in each categroy is higher than paid apps.
+
 * categorize first, then visualize the free vs paid propotion*
 
 - There is biased price in Applestore which leads to lower rating score.
+
 *find the same app,compare the price and rating score*
 
 
