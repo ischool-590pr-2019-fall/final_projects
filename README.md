@@ -43,3 +43,4 @@ Applestore: Rating of all versions vs current version
 - People are more willing to pay for the app under specific categories such as game
 
 - For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
+## Tips
