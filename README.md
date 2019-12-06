@@ -9,12 +9,15 @@ Figure out the specific application categories that can generate more revenue fo
 ## Hypothesis
 - The rating will be higher if the application need be paid.
 
-- People are not satisfied with the app will be more likely to publish the reviews
-
-- People are more willing to pay for the app under specific categories such as game
-
 - For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
 
+- The proportion of free  apps in each categroy is higher than paid apps.
+
+- There is biased price in Applestore which leads to lower rating score.
+
+- ???People are not satisfied with the app will be more likely to publish the reviews
+
+- ???People are more willing to pay for the app under specific categories such as game
  
 
 ## Data Source
@@ -32,15 +35,23 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 ## Hypothesis
 - The rating will be higher if the application need be paid.
-data: Applestore.csv vs googleplaystore.csv
-
-googleplay:ReviewsNumber of user reviews for the app (as when scraped)
-Applestore: Rating of all versions vs current version
-
-- People are not satisfied with the app will be more likely to publish the reviews
+*find the rating score and price correlationship*
 
 
-- People are more willing to pay for the app under specific categories such as game
+- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education
+*find the apps higher than 0.99, categorize them*
 
-- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
+- The proportion of free  apps in each categroy is higher than paid apps.
+* categorize first, then visualize the free vs paid propotion*
+
+- There is biased price in Applestore which leads to lower rating score.
+*find the same app,compare the price and rating score*
+
+
+
+- ???People are not satisfied with the app will be more likely to publish the reviews
+review 
+
+- ???People are more willing to pay for the app under specific categories such as game
+catrgory-->download times-->percentage??
 ## Tips
