@@ -17,6 +17,8 @@ Figure out the specific application categories that can generate more revenue fo
 
 - People are not satisfied with the app will be more likely to publish the reviews
 
+- Review word language analysis 
+
 - ???People are more willing to pay for the app under specific categories such as game
  
 
