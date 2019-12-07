@@ -9,12 +9,15 @@ Figure out the specific application categories that can generate more revenue fo
 ## Hypothesis
 - The rating will be higher if the application need be paid.
 
-- People are not satisfied with the app will be more likely to publish the reviews
-
-- People are more willing to pay for the app under specific categories such as game
-
 - For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
 
+- The proportion of free  apps in each categroy is higher than paid apps.
+
+- There is biased price in Applestore which leads to lower rating score.
+
+- People are not satisfied with the app will be more likely to publish the reviews
+
+- ???People are more willing to pay for the app under specific categories such as game
  
 
 ## Data Source
@@ -31,16 +34,42 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
 
 ## Hypothesis
-- The rating will be higher if the application need be paid.
-data: Applestore.csv vs googleplaystore.csv
+- The rating will be higher if the application need be paid. 
 
-googleplay:ReviewsNumber of user reviews for the app (as when scraped)
-Applestore: Rating of all versions vs current version
+
+  *find the rating score and price correlationship*
+
+
+- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education
+
+
+  *find the apps higher than 0.99, categorize them*
+
+
+- The proportion of free  apps in each categroy is higher than paid apps.
+
+
+  *categorize first, then visualize the free vs paid propotion*
+
+
+- There is biased price in Applestore 
+
+
+  *find the same app,compare the price*
+
 
 - People are not satisfied with the app will be more likely to publish the reviews
 
 
-- People are more willing to pay for the app under specific categories such as game
+  *find rating counts vs rating score relationship*
 
-- For those apps higher than normal price in the store($0.99), they fall into a specific genre.(eg:education..)
+- ???People are more willing to pay for the app under specific categories such as game
+catrgory-->download times-->percentage??
 ## Tips
+i. Doctests or other unit tests. 1-person team minimum 30% actual test coverage; 2- person minimum 70% actual test coverage;3-person minimum ***80% actual coverage AND use Travis CI during development***.
+
+ii. All functions (methods included) need complete Docstrings. 1-person=minimum 4 functions; 2-person=7+ functions; ***3-person= 10+ functions***
+
+iii. 3-person teams also should incorporate one of these efficiency techniques that will be discussed in class (***Numba or Cython compilation or parallel processing***).
+
+
