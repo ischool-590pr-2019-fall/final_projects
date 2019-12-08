@@ -2,11 +2,15 @@ from numba import jit
 import pandas as pd
 import numpy as np
 import re
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from PIL import Image
+
 
 def import_file():
     """
     This function explores the csv file by pd.readcsv() and did some basic data cleaning for further analysis
-    :return:
+    :return:dataframe obejct
     """
     Google = pd.read_csv('googleplaystore.csv',
                     dtype={'Price': str,
@@ -21,15 +25,58 @@ def import_file():
                      sep=',')
     Apple = delete_duplicate(Apple, 'track_name')
 
-    return Google, Apple
+    Google_review=pd.read_csv('googleplaystore_user_reviews.csv',
+                     )
 
-# Use function to replace a symbol in target column to another symbol
+    return Google, Apple,Google_review
+
 def replace_symbol(dataset, replace_col, target_symbol, final_symbol):
+    """
+        Use function to replace a symbol in target column to another symbol
+        :param dataset: The dataset we want to replace the symbol
+        :param replace_col: The specific column we want to replcace
+        :param target_symbol: The initial symbol will be replcaed
+        :param final_symbol: The final symbol replace the initial symbol
+        :return: the dataset after replaced
+
+        >>> d={'student':['%Amy','%Sophie','%Zoe','%Ben','%Kelley'],'number':['$1','2','$3','$4','5']}
+        >>> dataset=pd.DataFrame(data=d)
+        >>> replace_symbol(dataset, 'student', '%', '')
+          student number
+        0     Amy     $1
+        1  Sophie      2
+        2     Zoe     $3
+        3     Ben     $4
+        4  Kelley      5
+
+        >>> replace_symbol(dataset, 'number', '$', '')
+          student number
+        0     Amy      1
+        1  Sophie      2
+        2     Zoe      3
+        3     Ben      4
+        4  Kelley      5
+        """
     dataset[replace_col] = dataset[replace_col].str.replace(target_symbol, final_symbol)
     return dataset
 
-# Use function to delete the duplicate rows
+
 def delete_duplicate (dataframe, dup_col):
+    """
+        Use function to delete the duplicate rows
+        :param dataframe: The dataframe we want to delete duplicate rows
+        :param dup_col: The specific colunmn we want to delete dupilicate items
+        :return: The dataframe after dropping duplucate items
+
+        >>> d={'fruit':['apple','banana','orange','orange','pear', 'orange'],'price':['$1','$2','$3','$4','$5','$6']}
+        >>> dataframe=pd.DataFrame(data=d)
+        >>> delete_duplicate(dataframe, 'fruit')
+            fruit price
+        0   apple    $1
+        1  banana    $2
+        2  orange    $3
+        4    pear    $5
+        """
     dataframe.drop_duplicates(subset=dup_col, inplace=True)
     return dataframe
 
@@ -92,7 +139,24 @@ def find_price(v:pd.core.frame.DataFrame,price_num:str)->pd.core.series.Series:
     return v_price
 
 #hypo3:The proportion of free apps in each categroy is higher than paid apps.
-def gen_cat_result(v):
+def gen_cat_result(v:pd.core.frame.DataFrame)->pd.core.series.Series:
+    """
+    This function takes the original dataframe object and then find the number of free and non-free apps under each category
+    Attention: to avoid the confusing output where the number of apps become floating number is there is NAN value,
+    we apply the astype('Int64')-->New... Int64 with NaN support!
+    :param v: the dataframe object to be parsed in find the catefory information
+    :return: two Series object contains the number of free and non-free apps
+    >>> d={'prime_genre':['red','red','red','yellow','green','yellow'],'price':['0','6','0','3','6','7']}
+    >>> v=pd.DataFrame(data=d)
+    >>> gen_cat_result(v)
+    (prime_genre
+    green     1
+    red       1
+    yellow    2
+    dtype: Int64, prime_genre
+    red    2
+    dtype: Int64)
+    """
     if 'Type' in list(v.columns):
         free_app = v[v['Type'] == 'Free']
         paid_app = v[v['Type'] == 'Paid']
@@ -109,7 +173,20 @@ def gen_cat_result(v):
     return paid_app_cat,free_app_cat
 
 
-def gen_df_result(free_app_cat,paid_app_cat):
+def gen_df_result(free_app_cat:pd.core.series.Series,paid_app_cat:pd.core.series.Series)->pd.core.frame.DataFrame:
+    """
+    generate a dataframe object based on the payment information of apps, first column is the category name,
+    then the next two columns contain the number of  free apps and paid apps, the last column contains the free percentage
+    :param free_app_cat:a pandas series object which contains the number of free apps under each category
+    :param paid_app_cat:a pandas series object which contains the number of non-free apps under each category
+    :return:a dataframe object contains gateory and its corresponding
+    >>> free_app_cat=pd.Series([2,3])
+    >>> paid_app_cat=pd.Series([4,6])
+    >>> gen_df_result(free_app_cat,paid_app_cat)
+       free  paid  free_percentage
+    0     2     4           0.3333
+    1     3     6           0.3333
+    """
     combine = pd.DataFrame()
     combine['free']=free_app_cat
     combine['paid']=paid_app_cat
@@ -148,12 +225,33 @@ def Analyze_same_App(Google, Apple):
     print("{:^20}{:^30}{:^30}{:^30}".format("Price", same_price, Google_price_higher, Apple_price_higher))
     print("{:^20}{:^30}{:^30}{:^30}".format("Review Rating Score", same_rate, Google_rate_higher, Apple_rate_higher))
 
-# Use function to combine two dataframes
+
 def combine_dataframe (dataframe1, dataframe2, frame1_col, frame2_col):
+    """
+        Use function to combine two dataframes
+        :param dataframe1: The first dataframe we want o combine
+        :param dataframe2: The second dataframe we want to combine
+        :param frame1_col: The column in first dataframe we want to combine with
+        :param frame2_col: The column in second dataframe we want to combine with first dataframe
+        :return: A dataframe after the combination
+
+        >>> d1={'fruit':['apple','banana','orange','pear','tomato','blueberry'],'price':['$1','$2','$3','$4','$5','$6']}
+        >>> dataframe1=pd.DataFrame(data=d1)
+        >>> d2 = {'fruit':['apple','banana','orange','pear','tomato','blueberry'],'color':['red','yellow','orange','yelloe','red','blue']}
+        >>> dataframe2=pd.DataFrame(data=d2)
+        >>> combine_dataframe(dataframe1, dataframe2, 'fruit', 'fruit')
+               fruit price   color
+        0      apple    $1     red
+        1     banana    $2  yellow
+        2     orange    $3  orange
+        3       pear    $4  yelloe
+        4     tomato    $5     red
+        5  blueberry    $6    blue
+        """
     combine_dataframe = pd.merge(dataframe1, dataframe2, left_on = frame1_col, right_on=frame2_col, how='left')
     return combine_dataframe
 
-# Zhiyan
+#Hypo 5
 def addPropColumn(origin, numerator, deno, dirtyL):
     '''
     given a dataframe, add a new column whose value is the one column divided by the other column. Before division, we do data cleaning based on a list of strings which are the thing we want to strip
@@ -176,7 +274,7 @@ def addPropColumn(origin, numerator, deno, dirtyL):
     origin['prop'] = prop
 
 
-# Zhiyan
+#Hypo6 PartI
 def getFreq(df, colname):
     '''
     given a dataframe and a column name in it, get the word frequency of the column
@@ -196,9 +294,11 @@ def getFreq(df, colname):
 
     return mydic
 
+#hypo6
+#PartIII
 # import the review data and split it to list and dictionaries
 def import_review():
-    with open('/Users/sophie9w9/Desktop/googleplaystore_user_reviews.csv', 'r') as f:
+    with open('googleplaystore_user_reviews.csv', 'r') as f:
         Review = []  # final output
 
         for line in f:
@@ -272,8 +372,7 @@ def Analyze_Review(Review):
             break
 
 if __name__ == "__main__":
-    import_file()
-    Google,Apple=import_file()
+    Google,Apple,Google_review=import_file()
 
     # Hypothesis 1
     Analyze_Free_rate(Google, Apple)
@@ -295,15 +394,27 @@ if __name__ == "__main__":
     #Hypothesis 4
     Analyze_same_App(Google, Apple)
 
-    # Hypothesis 5
-    myframe = Google[['Installs', 'Reviews', 'Rating']]
-    rowNoDel = np.where(myframe['Installs'] == 'Free')[0][0]
-    myframe.drop([rowNoDel], inplace=True)
-    addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
+    # #Hypothesis 5
+    # myframe = Google[['Installs', 'Reviews', 'Rating']]
+    # rowNoDel = np.where(myframe['Installs'] == 'Free')[0][0]
+    # myframe.drop([rowNoDel], inplace=True)
+    # addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
 
-    # wordsFreq = getFreq(,'Translated_Review')
+    #Hypothesis 6
+    #part1:find all words frequency
+    wordsFreq = getFreq(Google_review, 'Translated_Review')
 
-    # Hypothesis 6
+    #part2:data visulization
+    remove_list=['nan','i','it','this','the','game','app']
+    [wordsFreq.pop(key) for key in remove_list]
+    print(wordsFreq)
+    wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
+    plt.imshow(wc, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
+
+    # part 3: find words under different sentiment
     import_review()
     Review = import_review()
     Analyze_Review(Review)
+
