@@ -19,7 +19,7 @@ Figure out the specific application categories that can generate more revenue fo
 
 - Review word language analysis 
 
-- ???People are more willing to pay for the app under specific categories such as game
+
  
 
 ## Data Source
@@ -65,8 +65,11 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 
   *find rating counts vs rating score relationship*
 
-- ???People are more willing to pay for the app under specific categories such as game
-catrgory-->download times-->percentage??
+- review word analysis
+
+  *part1:words frequency among all apps*
+  *part2:a closer look in terms of positive/negative/netural comments*
+  *part3:words frequency data visualization -->word cloud*
 ## Tips
 i. Doctests or other unit tests. 1-person team minimum 30% actual test coverage; 2- person minimum 70% actual test coverage;3-person minimum ***80% actual coverage AND use Travis CI during development***.
 
