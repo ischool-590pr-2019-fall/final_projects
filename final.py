@@ -152,6 +152,28 @@ def combine_dataframe (dataframe1, dataframe2, frame1_col, frame2_col):
     combine_dataframe = pd.merge(dataframe1, dataframe2, left_on = frame1_col, right_on=frame2_col, how='left')
     return combine_dataframe
 
+# Zhiyan
+def addPropColumn(origin, numerator, deno, dirtyL):
+    '''
+    given a dataframe, add a new column whose value is the one column divided by the other column. Before division, we do data cleaning based on a list of strings which are the thing we want to strip
+    :param origin: original dataframe with 2 columns
+    :param numerator: the column name of the numerator
+    :param deno: the column name of the denominator
+    :param dirtyL: a list of strings which are the thing we want to strip
+    :return: no return, modify the original dataframe
+    '''
+    # clean the dirty strings
+    for string in dirtyL:
+        origin[numerator] = origin[numerator].str.replace(string,'')
+        origin[deno] = origin[deno].str.replace(string, '')
+
+    # change data type to calculate proportion
+    origin[[numerator]] = pd.to_numeric(origin[numerator])
+    origin[[deno]] = pd.to_numeric(origin[deno])
+
+    prop = origin[numerator] / origin[deno]
+    origin['prop'] = prop
+
 if __name__ == "__main__":
     import_file()
     Google,Apple=import_file()
@@ -176,4 +198,9 @@ if __name__ == "__main__":
     #Hypothesis 4
     Analyze_same_App(Google, Apple)
 
+    # Hypothesis 5
+    myframe = Google[['Installs', 'Reviews', 'Rating']]
+    rowNoDel = np.where(myframe['Installs'] == 'Free')[0][0]
+    myframe.drop([rowNoDel], inplace=True)
+    Apple(myframe, 'Reviews', 'Installs', ['+', ','])
 
