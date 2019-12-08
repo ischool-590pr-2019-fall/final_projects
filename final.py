@@ -8,14 +8,14 @@ def import_file():
     This function explores the csv file by pd.readcsv() and did some basic data cleaning for further analysis
     :return:
     """
-    Google = pd.read_csv('/Users/sophie9w9/Desktop/googleplaystore.csv',
+    Google = pd.read_csv('googleplaystore.csv',
                     dtype={'Price': str,
                            'Rating': str},
                     sep=',')
     replace_symbol(Google, 'Price', '$', '')
     Google = delete_duplicate(Google, 'App')
 
-    Apple = pd.read_csv('/Users/sophie9w9/Desktop/AppleStore.csv',
+    Apple = pd.read_csv('AppleStore.csv',
                      dtype={'price': str,
                             'user_rating': str},
                      sep=',')
