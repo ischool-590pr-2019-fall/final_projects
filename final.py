@@ -174,6 +174,27 @@ def addPropColumn(origin, numerator, deno, dirtyL):
     prop = origin[numerator] / origin[deno]
     origin['prop'] = prop
 
+
+# Zhiyan
+def getFreq(df, colname):
+    '''
+    given a dataframe and a column name in it, get the word frequency of the column
+    :param df: dataframe
+    :param colname: colmun name
+    :return: a dictionary of frequency, key is the word, value is the frequency it appears in the dataframe
+    '''
+    s = r'[\s\,\;\(\)\.\&\!\:]+'
+    mylist = list(df[colname])
+    mydic = {}
+    for i in mylist:
+        #     print(type(i))
+
+        sentence = re.split(s, str(i))
+        for j in sentence:
+            mydic[j.lower()] = mydic.get(j.lower(), 0) + 1
+
+    return mydic
+
 if __name__ == "__main__":
     import_file()
     Google,Apple=import_file()
@@ -202,5 +223,6 @@ if __name__ == "__main__":
     myframe = Google[['Installs', 'Reviews', 'Rating']]
     rowNoDel = np.where(myframe['Installs'] == 'Free')[0][0]
     myframe.drop([rowNoDel], inplace=True)
-    Apple(myframe, 'Reviews', 'Installs', ['+', ','])
+    addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
 
+    # wordsFreq = getFreq(,'Translated_Review')
