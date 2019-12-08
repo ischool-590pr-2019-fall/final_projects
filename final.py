@@ -1,20 +1,21 @@
 from numba import jit
 import pandas as pd
 import numpy as np
+import re
 
 def import_file():
     """
     This function explores the csv file by pd.readcsv() and did some basic data cleaning for further analysis
     :return:
     """
-    Google = pd.read_csv('/Users/ss/Desktop/GA/course/IS590/final_projects/googleplaystore.csv',
+    Google = pd.read_csv('/Users/sophie9w9/Desktop/googleplaystore.csv',
                     dtype={'Price': str,
                            'Rating': str},
                     sep=',')
     replace_symbol(Google, 'Price', '$', '')
     Google = delete_duplicate(Google, 'App')
 
-    Apple = pd.read_csv('/Users/ss/Desktop/GA/course/IS590/final_projects/AppleStore.csv',
+    Apple = pd.read_csv('/Users/sophie9w9/Desktop/AppleStore.csv',
                      dtype={'price': str,
                             'user_rating': str},
                      sep=',')
@@ -195,6 +196,81 @@ def getFreq(df, colname):
 
     return mydic
 
+# import the review data and split it to list and dictionaries
+def import_review():
+    with open('/Users/sophie9w9/Desktop/googleplaystore_user_reviews.csv', 'r') as f:
+        Review = []  # final output
+
+        for line in f:
+            values_on_line = line.split(',')
+
+            Review.append({})
+            tempdic = Review[-1]  # temporary dictionary for all of the data
+            tempdic["App"] = values_on_line[0]
+            #Split the review to words
+            word = values_on_line[1].split(' ')
+            tempdic["Trans_Review"] = word
+            tempdic["Sentiment"] = values_on_line[2]
+            tempdic["Senti_Polarity"] = values_on_line[3]
+            tempdic["Senti_Subjectibe"] = values_on_line[4]
+
+    return Review
+
+# count the number of an word under different sentiment
+def Count_words(Review, search_word, sentiment):
+    count = 0
+    for i in range(0, len(Review)):
+        if search_word in Review[i]["Trans_Review"] and Review[i]["Sentiment"] == sentiment:
+            count += 1
+
+    return count
+
+# count the total number of comments under different sentiment
+def Count_senti(Review):
+    count_P = 0
+    count_N = 0
+    count_Netr = 0
+    for i in range(0, len(Review)):
+        if Review[i]["Sentiment"] == "Positive":
+            count_P += 1
+        if Review[i]["Sentiment"] == "Negative":
+            count_N += 1
+        if Review[i]["Sentiment"] == "Neutral":
+            count_Netr += 1
+    return count_P, count_N, count_Netr
+
+# Analyze the frequency of a specific word under different sentiment
+def Analyze_Review(Review):
+    word_like_P = Count_words(Review, "like", "Positive")
+    word_like_N = Count_words(Review, "like", "Negative")
+    word_like_Netr = Count_words(Review, "like", "Neutral")
+
+    count_P, count_N, count_Netr = Count_senti(Review)
+    Percent_P = round(word_like_P / count_P, 4)
+    Percent_N = round(word_like_N/ count_N, 4)
+    Percent_Netr = round(word_like_Netr/count_Netr, 4)
+
+    print("The word 'like' appears ", word_like_P, " times in positive comments. The percentage is ", Percent_P)
+    print("The word 'like' appears ", word_like_N, " times in negative comments. The percentage is ", Percent_N)
+    print("The word 'like' appears ", word_like_Netr, " times in neutral comments. The percentage is ", Percent_Netr)
+
+    while True:
+        result = input("Find the words? (y/n): ")
+        print()
+        if result.lower() == "y":
+            word_input = input("Enter the word you want to count: ")
+            count_input_P = Count_words(Review, word_input, "Positive")
+            count_input_N = Count_words(Review, word_input, "Negative")
+            count_input_Netr = Count_words(Review, word_input, "Neutral")
+            input_percent_P = round(count_input_P / count_P, 4)
+            input_percent_N = round(count_input_N / count_N, 4)
+            input_percent_Netr = round(count_input_Netr / count_Netr, 4)
+            print("The word", word_input, "appears ", count_input_P, " times in positive comments. The percentage is ", input_percent_P)
+            print("The word", word_input, "appears ", count_input_N, " times in negative comments. The percentage is ", input_percent_N)
+            print("The word", word_input, "appears ", count_input_Netr, " times in neutral comments. The percentage is ", input_percent_Netr)
+        else:
+            break
+
 if __name__ == "__main__":
     import_file()
     Google,Apple=import_file()
@@ -226,3 +302,8 @@ if __name__ == "__main__":
     addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
 
     # wordsFreq = getFreq(,'Translated_Review')
+
+    # Hypothesis 6
+    import_review()
+    Review = import_review()
+    Analyze_Review(Review)
