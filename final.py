@@ -198,8 +198,12 @@ def gen_df_result(free_app_cat:pd.core.series.Series,paid_app_cat:pd.core.series
 
 
 # Hypothesis 4: There is biased price in Applestore
-# Find the Apps avaliable on both paltforms. Calculate the number of Apps which has higher price and which has higher review rating scores
 def Analyze_same_App(Google, Apple):
+    """
+    Find the Apps avaliable on both paltforms. Calculate the number of Apps which has higher price and which has higher review rating scores
+    :param Google: The Google Play dataset
+    :param Apple: The Apple Store dataset
+    """
     google = Google[Google['App'].isin(Apple['track_name'])]
     final_google = google[['App', 'Rating', 'Price']]
     final_google.columns = ['App', 'Google_rating', 'Google_price']
@@ -251,7 +255,7 @@ def combine_dataframe (dataframe1, dataframe2, frame1_col, frame2_col):
     combine_dataframe = pd.merge(dataframe1, dataframe2, left_on = frame1_col, right_on=frame2_col, how='left')
     return combine_dataframe
 
-#Hypo 5
+# Hypothsis 5
 def addPropColumn(origin, numerator, deno, dirtyL):
     '''
     given a dataframe, add a new column whose value is the one column divided by the other column. Before division, we do data cleaning based on a list of strings which are the thing we want to strip
@@ -274,7 +278,7 @@ def addPropColumn(origin, numerator, deno, dirtyL):
     origin['prop'] = prop
 
 
-#Hypo6 PartI
+# Hypothesis 6 Part I
 def getFreq(df, colname):
     '''
     given a dataframe and a column name in it, get the word frequency of the column
@@ -294,10 +298,12 @@ def getFreq(df, colname):
 
     return mydic
 
-#hypo6
-#PartIII
-# import the review data and split it to list and dictionaries
+#hypo6 Part III
 def import_review():
+    """
+    Import the review data and split it to list and dictionaries
+    :return: The Google review details dataset
+    """
     with open('googleplaystore_user_reviews.csv', 'r') as f:
         Review = []  # final output
 
@@ -316,8 +322,14 @@ def import_review():
 
     return Review
 
-# count the number of an word under different sentiment
 def Count_words(Review, search_word, sentiment):
+    """
+    Count the number of an word under different sentiment
+    :param Review: The Google review details dataset
+    :param search_word: The word we want to count the frequency of apperance
+    :param sentiment: The sentiment we want to check
+    :return: The number of apperance for the word
+    """
     count = 0
     for i in range(0, len(Review)):
         if search_word in Review[i]["Trans_Review"] and Review[i]["Sentiment"] == sentiment:
@@ -325,8 +337,13 @@ def Count_words(Review, search_word, sentiment):
 
     return count
 
-# count the total number of comments under different sentiment
+
 def Count_senti(Review):
+    """
+    Count the total number of comments under different sentiment
+    :param Review: The review details dataset
+    :return: The total number of comments under respectively different sentiment
+    """
     count_P = 0
     count_N = 0
     count_Netr = 0
@@ -339,8 +356,12 @@ def Count_senti(Review):
             count_Netr += 1
     return count_P, count_N, count_Netr
 
-# Analyze the frequency of a specific word under different sentiment
+
 def Analyze_Review(Review):
+    """
+    Analyze the frequency of a specific word under different sentiment
+    :param Review: The review details dataset
+    """
     word_like_P = Count_words(Review, "like", "Positive")
     word_like_N = Count_words(Review, "like", "Negative")
     word_like_Netr = Count_words(Review, "like", "Neutral")
