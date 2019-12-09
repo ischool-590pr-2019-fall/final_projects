@@ -2,9 +2,10 @@ from numba import jit
 import pandas as pd
 import numpy as np
 import re
-from wordcloud import WordCloud
+# from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from PIL import Image
+import seaborn as sns
 
 
 
@@ -276,17 +277,21 @@ def addPropColumn(origin, numerator, deno, dirtyL):
     :param dirtyL: a list of strings which are the thing we want to strip
     :return: no return, modify the original dataframe
     '''
-    # clean the dirty strings
-    for string in dirtyL:
-        origin[numerator] = origin[numerator].str.replace(string,'')
-        origin[deno] = origin[deno].str.replace(string, '')
+    # clean the dirty strings and change the data type of string to numberic
+    if origin[numerator].dtype == 'O':
+        for string in dirtyL:
+            origin[numerator] = origin[numerator].str.replace(string, '')
+        origin[[numerator]] = pd.to_numeric(origin[numerator])
 
-    # change data type to calculate proportion
-    origin[[numerator]] = pd.to_numeric(origin[numerator])
-    origin[[deno]] = pd.to_numeric(origin[deno])
+    if origin[deno].dtype == 'O':
+        for string in dirtyL:
+            origin[deno] = origin[deno].str.replace(string, '')
+        origin[[deno]] = pd.to_numeric(origin[deno])
+
 
     prop = origin[numerator] / origin[deno]
-    origin['prop'] = prop
+    origin['Proportion'] = prop
+
 
 
 # Hypothesis 6 Part I
@@ -442,11 +447,13 @@ if __name__ == "__main__":
     #Hypothesis 4
     Analyze_same_App(Google, Apple)
 
-    # #Hypothesis 5
-    # myframe = Google[['Installs', 'Reviews', 'Rating']]
-    # rowNoDel = np.where(myframe['Installs'] == 'Free')[0][0]
-    # myframe.drop([rowNoDel], inplace=True)
-    # addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
+    #Hypothesis 5
+    myframe = Google[['Installs', 'Reviews', 'Rating']]
+    addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
+    myframe[['Rating']] = pd.to_numeric(myframe['Rating'])
+    # print(myframe.dtypes)
+    sns.regplot(myframe['Proportion'], myframe['Rating'])# code for plot
+
 
     #Hypothesis 6
     #part1:find all words frequency
