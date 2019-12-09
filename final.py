@@ -276,17 +276,24 @@ def addPropColumn(origin, numerator, deno, dirtyL):
     :param deno: the column name of the denominator
     :param dirtyL: a list of strings which are the thing we want to strip
     :return: no return, modify the original dataframe
+    >>> data = {'a':['1,000', '2,000'], 'b':['10+', '100+']}
+    >>> df = pd.DataFrame(data)
+    >>> addPropColumn(df, 'b', 'a', ['+', ','])
+    >>> df['Proportion'][0]
+    0.01
+    >>> df['Proportion'][1]
+    0.05
     '''
     # clean the dirty strings and change the data type of string to numberic
     if origin[numerator].dtype == 'O':
         for string in dirtyL:
             origin[numerator] = origin[numerator].str.replace(string, '')
-        origin[[numerator]] = pd.to_numeric(origin[numerator])
+        origin[numerator] = pd.to_numeric(origin[numerator])
 
     if origin[deno].dtype == 'O':
         for string in dirtyL:
             origin[deno] = origin[deno].str.replace(string, '')
-        origin[[deno]] = pd.to_numeric(origin[deno])
+        origin[deno] = pd.to_numeric(origin[deno])
 
 
     prop = origin[numerator] / origin[deno]
@@ -297,12 +304,19 @@ def addPropColumn(origin, numerator, deno, dirtyL):
 # Hypothesis 6 Part I
 def getFreq(df, colname):
     '''
-    given a dataframe and a column name in it, get the word frequency of the column
+    given a dataframe and a column name in it, get the word frequency of the column, regardless of upper and lower letter
     :param df: dataframe
     :param colname: colmun name
     :return: a dictionary of frequency, key is the word, value is the frequency it appears in the dataframe
+    >>> data = {'sentence':['apple ! juice', 'Apple&:cider?','cider']}
+    >>> df = pd.DataFrame(data)
+    >>> dic = getFreq(df, 'sentence')
+    >>> dic['apple']
+    2
+    >>> dic['cider']
+    2
     '''
-    s = r'[\s\,\;\(\)\.\&\!\:]+'
+    s = r'[\s\,\;\(\)\.\&\!\:\?]+'
     mylist = list(df[colname])
     mydic = {}
     for i in mylist:
@@ -451,9 +465,8 @@ if __name__ == "__main__":
     myframe = Google[['Installs', 'Reviews', 'Rating']]
     addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
     myframe[['Rating']] = pd.to_numeric(myframe['Rating'])
-    # print(myframe.dtypes)
     sns.regplot(myframe['Proportion'], myframe['Rating'])# code for plot
-
+    print(myframe.dtypes)
 
     #Hypothesis 6
     #part1:find all words frequency
