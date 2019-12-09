@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 
+
 def import_file():
     """
     This function explores the csv file by pd.readcsv() and did some basic data cleaning for further analysis
@@ -422,9 +423,13 @@ if __name__ == "__main__":
 
     #hypothesis 2:
     Google_price=find_price(Google,'0.99')
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into a specific genre.\n','Google result\n',Google_price)
+    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Google result\n',Google_price)
+    Google_plot=Google_price.plot(title='Google Play Store\nApp category for Prices of apps higher than 0.99)',kind='pie')
+    plt.show()
     Apple_price=find_price(Apple,'0.99')
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into a specific genre.\n','Apple Result\n',Apple_price)
+    Apple_plot=Apple_price.plot(title='Apple Store\n App category for prices of apps higher than 0.99',kind="pie")
+    plt.show()
+    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Apple Result\n',Apple_price)
 
     #hypothesis 3:
     paid_app_cat,free_app_cat=gen_cat_result(Google)
@@ -447,14 +452,14 @@ if __name__ == "__main__":
     #part1:find all words frequency
     wordsFreq = getFreq(Google_review, 'Translated_Review')
 
-    #part2:data visulization
-    remove_list=['nan','i','it','this','the','game','app']
-    [wordsFreq.pop(key) for key in remove_list]
-    print(wordsFreq)
-    wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
-    plt.imshow(wc, interpolation='bilinear')
-    plt.axis("off")
-    plt.show()
+    # #part2:data visulization
+    # remove_list=['nan','i','it','this','the','game','app']
+    # [wordsFreq.pop(key) for key in remove_list]
+    # print(wordsFreq)
+    # wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
+    # plt.imshow(wc, interpolation='bilinear')
+    # plt.axis("off")
+    # plt.show()
 
     # part 3: find words under different sentiment
     import_review()
