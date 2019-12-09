@@ -82,8 +82,12 @@ def delete_duplicate (dataframe, dup_col):
 
 
 #Hypothesis 1: The rating will be higher if the application need be paid.
-# Categorize the Apps according to free or not free. Calculate the average review rating score relatively. Compare the score to get conclusion
 def Analyze_Free_rate(Google, Apple):
+    """
+    Categorize the Apps according to free or not free. Calculate the average review rating score relatively. Compare the score to get conclusion
+    :param Google: The Google Play dataset
+    :param Apple: The Apple Store dataset
+    """
     Google_PriceRate = Google[['App', 'Price', 'Rating']]
     Apple_PriceRate = Apple[['track_name', 'price', 'user_rating']]
     Apple_PriceRate.columns = ['App', 'Price', 'Rating']
