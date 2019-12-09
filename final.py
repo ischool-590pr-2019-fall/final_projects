@@ -170,14 +170,14 @@ def gen_cat_result(v:pd.core.frame.DataFrame)->pd.core.series.Series:
     if 'Type' in list(v.columns):
         free_app = v[v['Type'] == 'Free']
         paid_app = v[v['Type'] == 'Paid']
-        free_app_cat = free_app.groupby('Category').size()
-        paid_app_cat = paid_app.groupby('Category').size()
+        free_app_cat = free_app.groupby('Category').size().astype('Int64')
+        paid_app_cat = paid_app.groupby('Category').size().astype('Int64')
         paid_app_cat = paid_app_cat.fillna(0)
     elif 'price' in list(v.columns):
         free_app = v[v['price'] == '0']
         paid_app = v[v['price'] != '0']
-        free_app_cat = free_app.groupby('prime_genre').size()
-        paid_app_cat = paid_app.groupby('prime_genre').size()
+        free_app_cat = free_app.groupby('prime_genre').size().astype('Int64')
+        paid_app_cat = paid_app.groupby('prime_genre').size().astype('Int64')
     else:
         raise ValueError('No payment information in input data,please check again...')
     return paid_app_cat,free_app_cat
@@ -331,6 +331,8 @@ def import_review():
             tempdic["Senti_Subjectibe"] = values_on_line[4]
 
     return Review
+
+
 
 def Count_words(Review, search_word, sentiment):
     """
