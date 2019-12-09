@@ -68,13 +68,19 @@ def delete_duplicate (dataframe, dup_col):
         :param dup_col: The specific colunmn we want to delete dupilicate items
         :return: The dataframe after dropping duplucate items
 
-        >>> d={'fruit':['apple','banana','orange','orange','pear', 'orange'],'price':['$1','$2','$3','$4','$5','$6']}
+        >>> d={'fruit':['apple','banana','orange','orange','pear', 'orange'],'price':['$1','$3','$3','$4','$5','$6']}
         >>> dataframe=pd.DataFrame(data=d)
         >>> delete_duplicate(dataframe, 'fruit')
             fruit price
         0   apple    $1
-        1  banana    $2
+        1  banana    $3
         2  orange    $3
+        4    pear    $5
+
+        >>> delete_duplicate(dataframe, 'price')
+            fruit price
+        0   apple    $1
+        1  banana    $3
         4    pear    $5
         """
     dataframe.drop_duplicates(subset=dup_col, inplace=True)
@@ -329,10 +335,20 @@ def import_review():
 def Count_words(Review, search_word, sentiment):
     """
     Count the number of an word under different sentiment
-    :param Review: The Google review details dataset
+    :param Review: The Google review details which arrange in a list
     :param search_word: The word we want to count the frequency of apperance
     :param sentiment: The sentiment we want to check
     :return: The number of apperance for the word
+
+    >>> Rev = [{"Trans_Review": ['1', '2', '3', '4'], "Sentiment": 'Positive'}, {"Trans_Review": ['1', '1', '3', '5'], "Sentiment": 'Positive'}, {"Trans_Review": ['0', '1', '3', '5'], "Sentiment": 'Negative'}]
+    >>> Count_words(Rev, '1', 'Positive')
+    2
+
+    >>> Count_words(Rev, '1', 'Negative')
+    1
+
+    >>> Count_words(Rev, '5', 'Positive')
+    1
     """
     count = 0
     for i in range(0, len(Review)):
