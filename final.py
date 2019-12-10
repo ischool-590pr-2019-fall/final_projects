@@ -6,6 +6,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from PIL import Image
 import seaborn as sns
+from matplotlib.pyplot import MultipleLocator
 
 
 
@@ -458,10 +459,20 @@ if __name__ == "__main__":
     Google_combine=gen_df_result(free_app_cat,paid_app_cat)
     Google_combine_plot = Google_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
     plt.show()
+    # data visualization based on percentage
+    Google_combine_pplot=Google_combine['free_percentage'].plot(kind='barh')
+    x_major_locator = MultipleLocator(0.1)
+    Google_combine_pplot.xaxis.set_major_locator(x_major_locator)
+    plt.show()
     print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Google result\n',Google_combine)
     paid_app_cat,free_app_cat=gen_cat_result(Apple)
     Apple_combine=gen_df_result(free_app_cat,paid_app_cat)
     Apple_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
+    plt.show()
+    # data visualization based on percentage
+    Apple_combine_pplot = Apple_combine['free_percentage'].plot(kind='barh')
+    x_major_locator = MultipleLocator(0.1)
+    Apple_combine_pplot.xaxis.set_major_locator(x_major_locator)
     plt.show()
     print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Apple result\n',Apple_combine)
 
