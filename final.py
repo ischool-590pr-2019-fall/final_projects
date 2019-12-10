@@ -203,6 +203,7 @@ def gen_df_result(free_app_cat:pd.core.series.Series,paid_app_cat:pd.core.series
     combine = pd.DataFrame()
     combine['free']=free_app_cat
     combine['paid']=paid_app_cat
+    combine=combine.fillna(0)
     combine['free_percentage']=(combine['free']/(combine['free']+combine['paid']))
     combine['free_percentage'] = round(combine['free_percentage'], 4)
     combine=combine.sort_values(by='free_percentage',ascending=False)
@@ -501,7 +502,6 @@ if __name__ == "__main__":
     plt.show()
 
     # part 3: find words under different sentiment
-    import_review()
     Review = import_review()
     Analyze_Review(Review)
 
