@@ -2,7 +2,7 @@ from numba import jit
 import pandas as pd
 import numpy as np
 import re
-# from wordcloud import WordCloud
+from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from PIL import Image
 import seaborn as sns
@@ -443,19 +443,26 @@ if __name__ == "__main__":
     #hypothesis 2:
     Google_price=find_price(Google,'0.99')
     print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Google result\n',Google_price)
-    Google_plot=Google_price.plot(title='Google Play Store\nApp category for Prices of apps higher than 0.99)',kind='pie')
+    # data visualizaiton
+    Google_plot = Google_price.plot(title='Google Play Store\nApp category for Prices of apps higher than 0.99)',
+                                    kind='pie')
     plt.show()
     Apple_price=find_price(Apple,'0.99')
-    Apple_plot=Apple_price.plot(title='Apple Store\n App category for prices of apps higher than 0.99',kind="pie")
+    # data visualization
+    Apple_plot = Apple_price.plot(title='Apple Store\n App category for prices of apps higher than 0.99', kind="pie")
     plt.show()
     print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Apple Result\n',Apple_price)
 
     #hypothesis 3:
     paid_app_cat,free_app_cat=gen_cat_result(Google)
     Google_combine=gen_df_result(free_app_cat,paid_app_cat)
+    Google_combine_plot = Google_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
+    plt.show()
     print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Google result\n',Google_combine)
     paid_app_cat,free_app_cat=gen_cat_result(Apple)
     Apple_combine=gen_df_result(free_app_cat,paid_app_cat)
+    Apple_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
+    plt.show()
     print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Apple result\n',Apple_combine)
 
     #Hypothesis 4
@@ -466,20 +473,21 @@ if __name__ == "__main__":
     addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
     myframe[['Rating']] = pd.to_numeric(myframe['Rating'])
     sns.regplot(myframe['Proportion'], myframe['Rating'])# code for plot
+    plt.show()
     print(myframe.dtypes)
 
     #Hypothesis 6
     #part1:find all words frequency
     wordsFreq = getFreq(Google_review, 'Translated_Review')
 
-    # #part2:data visulization
-    # remove_list=['nan','i','it','this','the','game','app']
-    # [wordsFreq.pop(key) for key in remove_list]
-    # print(wordsFreq)
-    # wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
-    # plt.imshow(wc, interpolation='bilinear')
-    # plt.axis("off")
-    # plt.show()
+    #part2:data visulization
+    remove_list=['nan','i','it','this','the','game','app']
+    [wordsFreq.pop(key) for key in remove_list]
+    print(wordsFreq)
+    wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
+    plt.imshow(wc, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
 
     # part 3: find words under different sentiment
     import_review()
