@@ -443,7 +443,9 @@ if __name__ == "__main__":
     Google,Apple,Google_review=import_file()
 
     # Hypothesis 1
-    Analyze_Free_rate(Google, Apple)
+    p1 = Process(target=Analyze_Free_rate, args=(Google, Apple))
+    p1.start()
+    p1.join()
 
     #hypothesis 2:
     Google_price=find_price(Google,'0.99')
@@ -481,7 +483,10 @@ if __name__ == "__main__":
     print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Apple result\n',Apple_combine)
 
     #Hypothesis 4
-    Analyze_same_App(Google,Apple)
+    p=Process(target=Analyze_same_App,args=(Google, Apple))
+    p.start()
+    p.join()
+
 
 
     #Hypothesis 5
