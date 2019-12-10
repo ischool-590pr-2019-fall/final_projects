@@ -445,7 +445,7 @@ if __name__ == "__main__":
     # Hypothesis 1
     p1 = Process(target=Analyze_Free_rate, args=(Google, Apple))
     p1.start()
-    p1.join()
+
 
     #hypothesis 2:
     Google_price=find_price(Google,'0.99')
@@ -485,7 +485,7 @@ if __name__ == "__main__":
     #Hypothesis 4
     p=Process(target=Analyze_same_App,args=(Google, Apple))
     p.start()
-    p.join()
+
 
 
 
