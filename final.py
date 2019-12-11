@@ -92,7 +92,7 @@ def delete_duplicate (dataframe, dup_col):
     return dataframe
 
 
-#Hypothesis 1: The rating will be higher if the application need be paid.
+#Hypothesis 3: The rating will be higher if the application need be paid.
 def Analyze_Free_rate(Google, Apple):
     """
     Categorize the Apps according to free or not free. Calculate the average review rating score relatively. Compare the score to get conclusion
@@ -114,11 +114,11 @@ def Analyze_Free_rate(Google, Apple):
     Not_Free[['Rating']] = Not_Free[['Rating']].astype('float')
     Not_Free_mean = round(Not_Free['Rating'].mean(), 4)
 
-    print("Hypothesis 1: The relationship between the free and review rating score: ", "\n", "\n"
+    print("Hypothesis 3: The relationship between the free and review rating score: ", "\n", "\n"
           " The average score of free Apps: ", Free_mean, "\n",
           "The average score of not free Apps: ", Not_Free_mean)
 
-#hypo 2:For those apps higher than normal price in the store($0.99), they fall into a specific genre.
+#Hypothesis 5:For those apps higher than normal price in the store($0.99), Game ranks the first in terms of category percentage.
 def find_price(v:pd.core.frame.DataFrame,price_num:str)->pd.core.series.Series:
     """
     This function asks the user to decide the minimum price for each app to count, then parse the dataframe object,
@@ -153,7 +153,7 @@ def find_price(v:pd.core.frame.DataFrame,price_num:str)->pd.core.series.Series:
         raise ValueError('No price information in input data,please check again..')
     return v_price
 
-#hypo3:The proportion of free apps in each categroy is higher than paid apps.
+#Hypothesis 6:The proportion of free apps in each categroy is higher than paid apps.
 def gen_cat_result(v:pd.core.frame.DataFrame)->pd.core.series.Series:
     """
     This function takes the original dataframe object and then find the number of free and non-free apps under each category
@@ -271,7 +271,7 @@ def combine_dataframe (dataframe1, dataframe2, frame1_col, frame2_col):
     combine_dataframe = pd.merge(dataframe1, dataframe2, left_on = frame1_col, right_on=frame2_col, how='left')
     return combine_dataframe
 
-# Hypothsis 5
+# Hypothsis 1:People are not satisfied with the app will be more likely to publish the reviews
 def addPropColumn(origin, numerator, deno, dirtyL):
     '''
     given a dataframe, add a new column whose value is the one column divided by the other column. Before division, we do data cleaning based on a list of strings which are the thing we want to strip
@@ -305,7 +305,7 @@ def addPropColumn(origin, numerator, deno, dirtyL):
 
 
 
-# Hypothesis 6 Part I
+# Hypothesis 2 Part I:words frequency among all apps
 def getFreq(df, colname):
     '''
     given a dataframe and a column name in it, get the word frequency of the column, regardless of upper and lower letter
@@ -332,7 +332,7 @@ def getFreq(df, colname):
 
     return mydic
 
-#hypo6 Part III
+#Hypothesis 2 Part III:a closer look in terms of positive/negative/netural comments
 def import_review():
     """
     Import the review data and split it to list and dictionaries
@@ -442,12 +442,12 @@ if __name__ == "__main__":
     start_time=time.time()
     Google,Apple,Google_review=import_file()
 
-    # Hypothesis 1
+    # Hypothesis 3
     Analyze_Free_rate(Google, Apple)
 
-    #hypothesis 2:
+    #hypothesis 5
     Google_price=find_price(Google,'0.99')
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Google result\n',Google_price)
+    print('Hypothesis 5:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Google result\n',Google_price)
     # data visualizaiton
     Google_plot = Google_price.plot(title='Google Play Store\nApp category for Prices of apps higher than 0.99)',
                                     kind='pie')
@@ -456,9 +456,9 @@ if __name__ == "__main__":
     # data visualization
     Apple_plot = Apple_price.plot(title='Apple Store\n App category for prices of apps higher than 0.99', kind="pie")
     plt.show()
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Apple Result\n',Apple_price)
+    print('Hypothesis 5:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Apple Result\n',Apple_price)
 
-    #hypothesis 3:
+    #hypothesis 6
     paid_app_cat,free_app_cat=gen_cat_result(Google)
     Google_combine=gen_df_result(free_app_cat,paid_app_cat)
     Google_combine_plot = Google_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
@@ -468,7 +468,7 @@ if __name__ == "__main__":
     x_major_locator = MultipleLocator(0.1)
     Google_combine_pplot.xaxis.set_major_locator(x_major_locator)
     plt.show()
-    print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Google result\n',Google_combine)
+    print('Hypothesis 6:The proportion of free apps in each categroy is higher than paid apps.\n','Google result\n',Google_combine)
     paid_app_cat,free_app_cat=gen_cat_result(Apple)
     Apple_combine=gen_df_result(free_app_cat,paid_app_cat)
     Apple_combine.plot(y=["free", "paid"], kind="bar", stacked=True)
@@ -478,13 +478,13 @@ if __name__ == "__main__":
     x_major_locator = MultipleLocator(0.1)
     Apple_combine_pplot.xaxis.set_major_locator(x_major_locator)
     plt.show()
-    print('Hypothesis 3:The proportion of free apps in each categroy is higher than paid apps.\n','Apple result\n',Apple_combine)
+    print('Hypothesis 6:The proportion of free apps in each categroy is higher than paid apps.\n','Apple result\n',Apple_combine)
 
     #Hypothesis 4
     Analyze_same_App(Google,Apple)
 
 
-    #Hypothesis 5
+    #Hypothesis 1
     myframe = Google[['Installs', 'Reviews', 'Rating']]
     addPropColumn(myframe, 'Reviews', 'Installs', ['+', ','])
     myframe[['Rating']] = pd.to_numeric(myframe['Rating'])
@@ -492,7 +492,7 @@ if __name__ == "__main__":
     plt.show()
     print(myframe.dtypes)
 
-    #Hypothesis 6
+    #Hypothesis 2
     #part1:find all words frequency
     wordsFreq = getFreq(Google_review, 'Translated_Review')
 
