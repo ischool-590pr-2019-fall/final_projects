@@ -449,7 +449,7 @@ if __name__ == "__main__":
 
     #hypothesis 2:
     Google_price=find_price(Google,'0.99')
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Google result\n',Google_price)
+    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), Game ranks the first in terms of category percentage.\n','Google result\n',Google_price)
     # data visualizaiton
     Google_plot = Google_price.plot(title='Google Play Store\nApp category for Prices of apps higher than 0.99)',
                                     kind='pie')
@@ -458,7 +458,7 @@ if __name__ == "__main__":
     # data visualization
     Apple_plot = Apple_price.plot(title='Apple Store\n App category for prices of apps higher than 0.99', kind="pie")
     plt.show()
-    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), they fall into the Game category.\n','Apple Result\n',Apple_price)
+    print('Hypothesis 2:For those apps higher than normal price in the store($0.99), Game ranks the first in terms of category percentage.\n','Apple Result\n',Apple_price)
 
     #hypothesis 3:
     paid_app_cat,free_app_cat=gen_cat_result(Google)
