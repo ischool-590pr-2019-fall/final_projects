@@ -44,7 +44,7 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
   *find the same app, compare the price*
 
 
-- For those apps higher than normal price in the store($0.99), they fall into a specific genre--Game.
+- For those apps higher than normal price in the store($0.99),  Game ranks the first in terms of category percentage.
 
 
   *find the apps higher than 0.99, categorize them*
