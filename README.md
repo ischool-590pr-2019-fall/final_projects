@@ -15,9 +15,13 @@ https://www.kaggle.com/ramamet4/app-store-apple-data-set-10k-apps
 ## Task Assignment
 
 Shanshan Wu: Hypothesis 5,6 and Hypothesis 2.PART2
+
 Yuxuan Zhang: Hypothesis 3,4 and Hypothesis 2.PART3
+
 Zhiyan Ren: Hypothesis 1 and Hypothesis 2.PART1
+
 All other jobs are done by group members together. 
+
 
 ## Hypothesis
 - People are not satisfied with the app will be more likely to publish the reviews
