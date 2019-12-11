@@ -24,12 +24,12 @@ All other jobs are done by group members together.
 
 
 ## Hypothesis
-- People are not satisfied with the app will be more likely to publish the reviews
+- 1.People are not satisfied with the app will be more likely to publish the reviews
 
 
   *find the percentage of people writing reviews V.S. rating score relationship*
 
-- review word analysis
+- 2.review word analysis
 
   *part1: words frequency among all apps*
 
@@ -37,24 +37,24 @@ All other jobs are done by group members together.
 
   *part3: a closer look in terms of positive/negative/netural comments*
   
-- The rating will be higher if the application needs to be paid. 
+- 3.The rating will be higher if the application needs to be paid. 
 
 
   *find the rating score and price relations*
   
-- There is biased price in Applestore 
+- 4.There is biased price in Applestore 
 
 
   *find the same app, compare the price*
 
 
-- For those apps higher than normal price in the store($0.99),  Game ranks the first in terms of category percentage.
+- 5.For those apps higher than normal price in the store($0.99),  Game ranks the first in terms of category percentage.
 
 
   *find the apps higher than 0.99, categorize them*
 
 
-- The proportion of free apps in each category is higher than paid apps.
+- 6.The proportion of free apps in each category is higher than paid apps.
 
 
   *categorize first, then visualize the free vs paid proportion*
@@ -65,11 +65,11 @@ All other jobs are done by group members together.
 
 ## Conclusion 
 
-- People are not satisfied with the app will be more likely to publish the reviews
+-1.People are not satisfied with the app will be more likely to publish the reviews
 
   *False*
  
-- review word analysis
+- 2.review word analysis
 
   *part1: words frequency among all apps*
 
@@ -78,20 +78,20 @@ All other jobs are done by group members together.
   *part3: a closer look in terms of positive/negative/netural comments*
   
   
-- The rating will be higher if the application needs to be paid. 
+- 3.The rating will be higher if the application needs to be paid. 
 
   *False*
   
-- There is biased price in Applestore 
+- 4.There is biased price in Applestore 
 
   *False*
 
-- For those apps higher than normal price in the store($0.99),  Game ranks the first in terms of category percentage.
+- 5.For those apps higher than normal price in the store($0.99),  Game ranks the first in terms of category percentage.
 
   *True for Apple Store, False for Google Play Store*
  
 
-- The proportion of free apps in each category is higher than paid apps.
+- 6.The proportion of free apps in each category is higher than paid apps.
 
   *True for Google Play store, False for Apple Store.*
 
