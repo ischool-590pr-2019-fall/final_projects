@@ -92,6 +92,7 @@ All other jobs are done by group members together.
  
 
 - The proportion of free apps in each category is higher than paid apps.
+
   *True for Google Play store, False for Apple Store.*
 
 
