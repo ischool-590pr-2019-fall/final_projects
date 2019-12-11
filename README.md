@@ -65,7 +65,7 @@ All other jobs are done by group members together.
 
 ## Conclusion 
 
--1.People are not satisfied with the app will be more likely to publish the reviews
+- 1.People are not satisfied with the app will be more likely to publish the reviews
 
   *False*
  
