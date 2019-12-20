@@ -500,6 +500,7 @@ if __name__ == "__main__":
     remove_list=['nan','i','it','this','the','game','app']
     [wordsFreq.pop(key) for key in remove_list]
     print(wordsFreq)
+    # reference:https://www.datacamp.com/community/tutorials/wordcloud-python
     wc = WordCloud(background_color="white").generate_from_frequencies(wordsFreq)
     plt.imshow(wc, interpolation='bilinear')
     plt.axis("off")
