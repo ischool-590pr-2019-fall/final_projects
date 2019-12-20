@@ -12,29 +12,6 @@ import time
 
 
 
-def import_file():
-    """
-    This function explores the csv file by pd.readcsv() and did some basic data cleaning for further analysis
-    :return:dataframe obejct
-    """
-    Google = pd.read_csv('googleplaystore.csv',
-                    dtype={'Price': str,
-                           'Rating': str},
-                    sep=',')
-    replace_symbol(Google, 'Price', '$', '')
-    Google = delete_duplicate(Google, 'App')
-
-    Apple = pd.read_csv('AppleStore.csv',
-                     dtype={'price': str,
-                            'user_rating': str},
-                     sep=',')
-    Apple = delete_duplicate(Apple, 'track_name')
-
-    Google_review=pd.read_csv('googleplaystore_user_reviews.csv',
-                     )
-
-    return Google, Apple,Google_review
-
 def replace_symbol(dataset, replace_col, target_symbol, final_symbol):
     """
         Use function to replace a symbol in target column to another symbol
@@ -440,7 +417,21 @@ def Analyze_Review(Review):
 
 if __name__ == "__main__":
     start_time=time.time()
-    Google,Apple,Google_review=import_file()
+    Google = pd.read_csv('googleplaystore.csv',
+                         dtype={'Price': str,
+                                'Rating': str},
+                         sep=',')
+    replace_symbol(Google, 'Price', '$', '')
+    Google = delete_duplicate(Google, 'App')
+
+    Apple = pd.read_csv('AppleStore.csv',
+                        dtype={'price': str,
+                               'user_rating': str},
+                        sep=',')
+    Apple = delete_duplicate(Apple, 'track_name')
+
+    Google_review = pd.read_csv('googleplaystore_user_reviews.csv',
+                                )
 
     # Hypothesis 3
     Analyze_Free_rate(Google, Apple)
