@@ -1,4 +1,3 @@
-from numba import jit
 import pandas as pd
 import numpy as np
 import re
@@ -7,7 +6,6 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import seaborn as sns
 from matplotlib.pyplot import MultipleLocator
-from multiprocessing import Process
 import time
 
 
