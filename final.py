@@ -117,9 +117,9 @@ def find_price(v:pd.core.frame.DataFrame,price_num:str)->pd.core.series.Series:
     >>> price_num='4'
     >>> find_price(v,price_num)
     prime_genre
-    green     1
-    red       1
     yellow    1
+    red       1
+    green     1
     dtype: int64
     >>> d={'prime_genre':['yellow','green','red','yellow','green','yellow'],'number':['3','6','8','3','2','7']}
     >>> v=pd.DataFrame(data=d)
