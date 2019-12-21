@@ -75,6 +75,16 @@ def Analyze_Free_rate(Google, Apple):
     Categorize the Apps according to free or not free. Calculate the average review rating score relatively. Compare the score to get conclusion
     :param Google: The Google Play dataset
     :param Apple: The Apple Store dataset
+
+    >>> google = {'App':['a','b','c','d','e','f'],'Price':['0','6','8','0','2','7'], 'Rating':['1','2','3','4','5','6']}
+    >>> g = pd.DataFrame(data=google)
+    >>> apple = {'track_name':['b','e','f','g','q','z'],'price':['1','2','6','0','3','9'], 'user_rating':['9','8','7','6','5','4']}
+    >>> a = pd.DataFrame(data=apple)
+    >>> Analyze_Free_rate(g, a)
+    Hypothesis 3: The relationship between the free and review rating score:
+    <BLANKLINE>
+     The average score of free Apps:  3.6667
+     The average score of not free Apps:  4.1667
     """
     Google_PriceRate = Google[['App', 'Price', 'Rating']]
     Apple_PriceRate = Apple[['track_name', 'price', 'user_rating']]
@@ -196,6 +206,19 @@ def Analyze_same_App(Google, Apple):
     Find the Apps avaliable on both paltforms. Calculate the number of Apps which has higher price and which has higher review rating scores
     :param Google: The Google Play dataset
     :param Apple: The Apple Store dataset
+
+    >>> google = {'App':['a','b','c','d','e','f'],'Price':['$3','$6','$8','$3','$2','$7'], 'Rating':['1','2','3','4','5','6']}
+    >>> g = pd.DataFrame(data=google)
+    >>> apple = {'track_name':['b','e','f','g','q','z'],'price':['$1','$2','$6','$4','$3','$9'], 'user_rating':['9','8','7','6','5','4']}
+    >>> a = pd.DataFrame(data=apple)
+    >>> Analyze_same_App(g, a)
+    <BLANKLINE>
+    <BLANKLINE>
+     Hypothesis 4: Compare same App on Google Play and Apple store:
+    <BLANKLINE>
+            Name                      Same                  Google Play is Higher          Apple Store is Higher
+           Price                      1                             2                             0
+    Review Rating Score               0                             0                             3
     """
     google = Google[Google['App'].isin(Apple['track_name'])]
     final_google = google[['App', 'Rating', 'Price']]
@@ -221,6 +244,7 @@ def Analyze_same_App(Google, Apple):
     print("Name".center(20), "Same".center(30), "Google Play is Higher".center(30), "Apple Store is Higher".center(30))
     print("{:^20}{:^30}{:^30}{:^30}".format("Price", same_price, Google_price_higher, Apple_price_higher))
     print("{:^20}{:^30}{:^30}{:^30}".format("Review Rating Score", same_rate, Google_rate_higher, Apple_rate_higher))
+
 
 
 def combine_dataframe (dataframe1, dataframe2, frame1_col, frame2_col):
@@ -366,6 +390,10 @@ def Count_senti(Review):
     Count the total number of comments under different sentiment
     :param Review: The review details dataset
     :return: The total number of comments under respectively different sentiment
+
+    >>> Rev = [{"Trans_Review": ['1', '2', '3', '4'], "Sentiment": 'Positive'}, {"Trans_Review": ['1', '1', '3', '5'], "Sentiment": 'Positive'}, {"Trans_Review": ['0', '1', '3', '5'], "Sentiment": 'Negative'}]
+    >>> Count_senti(Rev)
+    (2, 1, 0)
     """
     count_P = 0
     count_N = 0
@@ -384,6 +412,12 @@ def Analyze_Review(Review):
     """
     Analyze the frequency of a specific word under different sentiment
     :param Review: The review details dataset
+
+    >>> Rev = [{"Trans_Review": ['I', 'like', 'it'], "Sentiment": 'Positive'}, {"Trans_Review": ['I', 'love', 'it'], "Sentiment": 'Positive'}, {"Trans_Review": ['I', 'do','not', 'like', 'it'], "Sentiment": 'Negative'}, {"Trans_Review": ['I', 'may', 'like', 'it'], "Sentiment": 'Neutral'}]
+    >>> Analyze_Review(Rev)
+    The word 'like' appears  1  times in positive comments. The percentage is  0.5
+    The word 'like' appears  1  times in negative comments. The percentage is  1.0
+    The word 'like' appears  1  times in neutral comments. The percentage is  1.0
     """
     word_like_P = Count_words(Review, "like", "Positive")
     word_like_N = Count_words(Review, "like", "Negative")
